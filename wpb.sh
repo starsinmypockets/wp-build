@@ -7,9 +7,12 @@ installWPCLI() {
     chmod +x wp-cli.phar
     sudo mv wp-cli.phar /usr/local/bin/wp
     echo "Successfully installed wp cli at `which wp`"
+  else
+    echo "WP CLI already installed..."
   fi
 }
 
+# DEPRECATED
 setupDB() {
   if [ -f /root/.my.cnf ]; then
     mysql -e "CREATE DATABASE ${sitedb_name} /*\!40100 DEFAULT CHARACTER SET utf8 */;"
@@ -24,6 +27,8 @@ setupDB() {
 setupWP() {
   sudo -u www-data wp core download
   sudo -u www-data wp config create --dbname=${sitedb_name} --dbuser=${sitedb_user} --dbpass=${sitedb_pass} --dbhost=${sitedb_host}
+  sudo -u www-data wp db create
+  sudo -u www-data wp core install --url=${site_host} --title="${site_title}" --admin_user=${site_admin} --admin_password="${site_admin_pass}" --admin_email=${site_admin_email}
 }
 
 # do this first
@@ -41,6 +46,7 @@ configureNGINX() {
       if runcertbot; then
         certbot --nginx -d ${host} -d www.${host}
       fi
+      rm index.html
     else
       echo "Site setup failed!"
       exit 1
@@ -53,5 +59,4 @@ configureNGINX() {
 source $PWD/wpbconf.sh
 configureNGINX
 installWPCLI
-setupDB
 setupWP
