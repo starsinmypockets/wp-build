@@ -1,7 +1,7 @@
 server {
     server_name host www.host;
 
-    root path;
+    root /var/www/host;
     index index.html index.php;
 
     # log files
