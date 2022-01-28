@@ -9,7 +9,7 @@ A quick script to setup a Wordpress instance.
 ## Setting up a wordpress site
 * Install Debian
 * Install NGINX
-* Install Wordpress with `.my.cnf`
+* Install MySql with `.my.cnf`
 * Create a directory for your wordpress instance at `/var/www/SITEHOSTNAME`
 * Copy `sample.wpbconfig.sh` to your site directory and configure
 * From the site directory run `$ wpb`

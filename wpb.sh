@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 installWPCLI() {
+  echo 'Checking for wp cli... \n'
   if [ ! -f `which wp` ]; then
+    echo 'Downloading wp cli... \n'
     curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
     php wp-cli.phar --info
     chmod +x wp-cli.phar
@@ -33,6 +35,7 @@ setupWP() {
 
 # do this first
 configureNGINX() {
+  echo "Configuring nginx..."
   echo "Hello world" > index.html
   cp ${wpb_template_path} /etc/nginx/sites-available/${site_host}
   sed -i "s|host|${site_host}|g" /etc/nginx/sites-available/${site_host}
